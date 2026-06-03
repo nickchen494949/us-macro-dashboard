@@ -1,0 +1,661 @@
+/* US Macro Dashboard Premium CSS Design */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-heading: 'Outfit', var(--font-sans);
+
+  /* Light Theme Variables */
+  --bg-app: #f8fafc;
+  --bg-card: rgba(255, 255, 255, 0.85);
+  --border-color: rgba(226, 232, 240, 0.8);
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+  
+  --primary: #4f46e5;
+  --primary-light: rgba(79, 70, 229, 0.1);
+  --accent: #06b6d4;
+  
+  /* Status Colors */
+  --color-improving: #10b981;
+  --bg-improving: rgba(16, 185, 129, 0.1);
+  --color-worsening: #f59e0b;
+  --bg-worsening: rgba(245, 158, 11, 0.1);
+  --color-neutral: #64748b;
+  --bg-neutral: rgba(100, 116, 139, 0.1);
+  --color-danger: #ef4444;
+  --bg-danger: rgba(239, 68, 68, 0.1);
+  
+  /* Weather Specific Colors */
+  --goldilocks-color: #10b981;
+  --goldilocks-bg: rgba(16, 185, 129, 0.12);
+  --slowdown-color: #f59e0b;
+  --slowdown-bg: rgba(245, 158, 11, 0.12);
+  --inflation-color: #ec4899;
+  --inflation-bg: rgba(236, 72, 153, 0.12);
+  --stress-color: #a855f7;
+  --stress-bg: rgba(168, 85, 247, 0.12);
+  --recession-color: #ef4444;
+  --recession-bg: rgba(239, 68, 68, 0.12);
+
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+  --shadow-inset: inset 0 2px 4px 0 rgba(0, 0, 0, 0.05);
+  
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.6);
+  --glass-blur: blur(12px);
+}
+
+[data-theme="dark"] {
+  /* Dark Theme Variables */
+  --bg-app: #030712;
+  --bg-card: rgba(17, 24, 39, 0.8);
+  --border-color: rgba(31, 41, 55, 0.7);
+  --text-primary: #f9fafb;
+  --text-secondary: #d1d5db;
+  --text-muted: #9ca3af;
+  
+  --primary: #6366f1;
+  --primary-light: rgba(99, 102, 241, 0.15);
+  --accent: #22d3ee;
+  
+  /* Status Colors */
+  --color-improving: #34d399;
+  --bg-improving: rgba(52, 211, 153, 0.15);
+  --color-worsening: #fbbf24;
+  --bg-worsening: rgba(251, 191, 36, 0.15);
+  --color-neutral: #9ca3af;
+  --bg-neutral: rgba(156, 163, 175, 0.15);
+  --color-danger: #f87171;
+  --bg-danger: rgba(248, 113, 113, 0.15);
+
+  --glass-bg: rgba(17, 24, 39, 0.65);
+  --glass-border: rgba(31, 41, 55, 0.5);
+  --glass-blur: blur(16px);
+  
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -2px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -4px rgba(0, 0, 0, 0.4);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.2s ease;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-app);
+  color: var(--text-primary);
+  min-height: 100vh;
+  line-height: 1.5;
+  padding-bottom: 5rem;
+  overflow-x: hidden;
+}
+
+/* Background Gradients */
+.bg-gradient-mesh {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 600px;
+  background: radial-gradient(circle at 10% 20%, var(--primary-light) 0%, transparent 40%),
+              radial-gradient(circle at 90% 10%, rgba(6, 182, 212, 0.08) 0%, transparent 35%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+header {
+  padding: 2rem 1.5rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.brand-section h1 {
+  font-family: var(--font-heading);
+  font-size: 2.25rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.brand-section p {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+  font-weight: 500;
+}
+
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Dark mode toggle */
+.theme-toggle-btn {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  cursor: pointer;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.theme-toggle-btn:hover {
+  transform: translateY(-2px);
+  border-color: var(--primary);
+}
+
+/* Range Selector style */
+.range-selector {
+  display: flex;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 0.25rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.range-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 0.8125rem;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.range-btn.active {
+  background: var(--primary);
+  color: white;
+  box-shadow: var(--shadow-md);
+}
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* 2. Top Summary Panel */
+.summary-panel {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
+  padding: 2rem;
+  margin-bottom: 2.5rem;
+  box-shadow: var(--shadow-lg);
+  position: relative;
+  overflow: hidden;
+}
+
+.summary-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 1.25rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.summary-title {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* US Macro Weather Master Badge */
+.weather-master-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  border-radius: 9999px;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 0.9375rem;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  box-shadow: var(--shadow-md);
+}
+
+.weather-master-badge.goldilocks { color: var(--goldilocks-color); background: var(--goldilocks-bg); border: 1px solid rgba(16, 185, 129, 0.3); }
+.weather-master-badge.slowdown { color: var(--slowdown-color); background: var(--slowdown-bg); border: 1px solid rgba(245, 158, 11, 0.3); }
+.weather-master-badge.inflation { color: var(--inflation-color); background: var(--inflation-bg); border: 1px solid rgba(236, 72, 153, 0.3); }
+.weather-master-badge.stress { color: var(--stress-color); background: var(--stress-bg); border: 1px solid rgba(168, 85, 247, 0.3); }
+.weather-master-badge.recession { color: var(--recession-color); background: var(--recession-bg); border: 1px solid rgba(239, 68, 68, 0.3); }
+
+/* Weather pillars grid */
+.weather-pillars {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.25rem;
+}
+
+.pillar-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 1.25rem;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.pillar-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+}
+
+.pillar-value {
+  font-family: var(--font-heading);
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+.pillar-explanation {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+  margin-top: auto;
+}
+
+/* Pillar specific weather tags */
+.status-pill {
+  padding: 0.25rem 0.625rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: capitalize;
+  display: inline-block;
+  text-align: center;
+}
+
+.status-pill.improving, .status-pill.expanding, .status-pill.strong, .status-pill.easing, .status-pill.calm {
+  background: var(--bg-improving);
+  color: var(--color-improving);
+}
+.status-pill.worsening, .status-pill.slowing, .status-pill.cooling, .status-pill.sticky, .status-pill.tightening {
+  background: var(--bg-worsening);
+  color: var(--color-worsening);
+}
+.status-pill.neutral, .status-pill.restrictive {
+  background: var(--bg-neutral);
+  color: var(--color-neutral);
+}
+.status-pill.danger, .status-pill.contracting, .status-pill.cracking, .status-pill.reaccelerating, .status-pill.stress {
+  background: var(--bg-danger);
+  color: var(--color-danger);
+}
+
+/* Section design */
+.section-wrapper {
+  margin-bottom: 3.5rem;
+}
+
+.section-title {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-primary);
+}
+
+.section-title i {
+  color: var(--primary);
+  font-size: 1.25rem;
+}
+
+.section-desc {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  margin-bottom: 1.5rem;
+  max-width: 800px;
+}
+
+/* Macro Cards Grid */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+@media (min-width: 1200px) {
+  .cards-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* Individual Macro Card */
+.macro-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  padding: 1.5rem;
+  box-shadow: var(--shadow-md);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+}
+
+.macro-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: transparent;
+}
+
+.macro-card.improving::before { background: var(--color-improving); }
+.macro-card.worsening::before { background: var(--color-worsening); }
+.macro-card.neutral::before { background: var(--color-neutral); }
+.macro-card.danger::before { background: var(--color-danger); }
+
+.macro-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--primary-light);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.card-title-section {
+  max-width: 70%;
+}
+
+.card-title {
+  font-family: var(--font-heading);
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.3;
+}
+
+.card-series-id {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  letter-spacing: 0.02em;
+}
+
+/* Card value area */
+.card-value-section {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.card-value {
+  font-family: var(--font-heading);
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+.card-unit {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  margin-left: 0.125rem;
+}
+
+.card-date {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+/* Sparkline Chart Container */
+.chart-container {
+  height: 100px;
+  position: relative;
+  margin: 1rem 0;
+  width: 100%;
+}
+
+/* Change Badges Section */
+.changes-section {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.change-badge {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--bg-app);
+  border: 1px solid var(--border-color);
+  padding: 0.375rem 0.25rem;
+  border-radius: 8px;
+  font-size: 0.6875rem;
+  font-weight: 600;
+}
+
+.change-label {
+  color: var(--text-muted);
+  margin-bottom: 0.125rem;
+  font-size: 0.625rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.change-value {
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+.change-value.positive { color: #10b981; }
+.change-value.negative { color: #ef4444; }
+
+/* Explanation and Status description */
+.card-explanation {
+  font-size: 0.78125rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+  margin-top: auto;
+  border-top: 1px dashed var(--border-color);
+  padding-top: 0.75rem;
+}
+
+/* Loading/Error States */
+.loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--glass-bg);
+  backdrop-filter: blur(4px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  border-radius: 20px;
+}
+
+.spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid var(--border-color);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 0.5rem;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loading-text {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.error-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--bg-card);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  padding: 1rem;
+  border-radius: 20px;
+  text-align: center;
+}
+
+.error-icon {
+  font-size: 1.5rem;
+  color: var(--color-danger);
+  margin-bottom: 0.5rem;
+}
+
+.error-text {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.25rem;
+}
+
+.error-subtext {
+  font-size: 0.6875rem;
+  color: var(--text-muted);
+}
+
+/* Footer styling */
+footer {
+  text-align: center;
+  padding: 3rem 1.5rem;
+  border-top: 1px solid var(--border-color);
+  max-width: 1400px;
+  margin: 3rem auto 0 auto;
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+}
+
+footer p {
+  margin-bottom: 0.5rem;
+}
+
+footer a {
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  header {
+    padding: 1.5rem 1rem;
+  }
+  
+  .brand-section h1 {
+    font-size: 1.75rem;
+  }
+  
+  .summary-panel {
+    padding: 1.25rem;
+    border-radius: 18px;
+  }
+  
+  .summary-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+  
+  .weather-master-badge {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .weather-pillars {
+    grid-template-columns: 1fr;
+    gap: 0.875rem;
+  }
+  
+  .pillar-card {
+    padding: 1rem;
+  }
+  
+  .cards-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .container {
+    padding: 0 1rem;
+  }
+}
