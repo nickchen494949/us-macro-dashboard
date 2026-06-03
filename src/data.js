@@ -1,7 +1,7 @@
 // Auto-generated US Macro Dashboard Data
-// Generated at: 2026-06-03T05:31:49.702Z
+// Generated at: 2026-06-03T06:04:46.997Z
 export const MACRO_DATA = {
-  "lastUpdated": "2026-06-03T05:31:49.702Z",
+  "lastUpdated": "2026-06-03T06:04:46.997Z",
   "series": {
     "GDPC1": {
       "id": "GDPC1",

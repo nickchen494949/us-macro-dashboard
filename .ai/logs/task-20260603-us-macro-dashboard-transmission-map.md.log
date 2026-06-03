@@ -1,0 +1,18 @@
+^DI will begin by reading the task file to understand the requirements for the US Macro Dashboard Transmission Map.
+I will list the directory contents of the project to understand the existing project structure and identify the files to modify.
+I will check the files inside the `src` directory to see how the project is structured.
+I will view `index.html` to understand how the dashboard page is laid out.
+I will read the contents of `src/main.js` to inspect the analysis logic and see how indicator cards and weather pillars are currently generated and rendered.
+I will read the rest of `src/main.js` to see the complete implementation of card status calculations and formatting helpers.
+I will view `src/style.css` to understand the visual styles, color system, and themes used in the current dashboard.
+I will view the rest of the stylesheet to see the remaining layout details and responsive styling.
+I will edit `index.html` to insert the container for the new Macro Transmission Map, placing it between the top summary weather panel and the indicator cards container.
+I will look at the exact line range around the sections container in `index.html` to perform the modification.
+I will modify `index.html` to add the evidence section header that explicitly reframes the indicators as evidence beneath the transmission map.
+I will update `src/style.css` to add the styles for the new Macro Transmission Map, its cards, flow arrows, causal story container, bottlenecks, watch list, and responsive layout.
+I will modify `renderDashboard` in `src/main.js` to run the transmission calculations and render the transmission map in the page lifecycle.
+I will add `TICKER_NAME_MAP` in `src/main.js` to map the indicator symbols to user-friendly titles, enhancing the readability of the system nodes and watchlist.
+I will insert the new functions `calculateTransmissionMap` and `renderTransmissionMap` in `src/main.js` right above the weather panel renderer.
+I will view `package.json` to verify if there are any build steps, bundlers, or custom script executions needed to verify the application.
+I will check the git status of the project to see what files have been modified.
+I will run a syntax check on `src/main.js` using node to ensure that there are no syntax errors introduced in the JavaScript code.

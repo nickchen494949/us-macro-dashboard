@@ -15,6 +15,22 @@ A premium, responsive, interactive static dashboard to monitor the US macroecono
 
 ---
 
+## System vs. Evidence View: How to Read the Dashboard
+
+To prevent information overload and show the systemic flow of the economy, the dashboard is divided into two distinct conceptual layers:
+
+### 1. Macro Transmission Map (System View)
+The **Macro Transmission Map** represents the **systemic view** of the US economy. It models the causal, step-by-step transmission chain of monetary policy decisions:
+* **How it works:** It starts with **Fed Policy** (the policy impulse), flows through **Financial Conditions** and **Credit/Liquidity** (the market channels), impacts the **Rate-sensitive Economy** (e.g., Housing), spreads to the broader **Real Economy**, and finally registers in the **Labor Market** (the lagging confirmation), which feeds back into **Inflation Feedback** and drives the **Fed Reaction** response.
+* **Purpose:** It answers the question: *"Where is the US economic economic machine stuck or breaking?"* rather than just presenting disjointed metrics. It shows which parts of the transmission system are restrictive (red/orange) and which remain resilient (green).
+
+### 2. Indicator Cards (Evidence View)
+The **Supporting Indicator Evidence** cards represent the **factual/evidence view** of the dashboard.
+* **How it works:** Located beneath the Transmission Map, these cards contain the actual raw data (e.g., Sahm Rule calculations, mortgage rate percentages, balance sheet numbers, jobless claims) and high-DPI interactive sparklines.
+* **Purpose:** They act as the source of truth, providing historical verification and momentum indicators (1M, 3M, 12M trends) that prove the status of the nodes in the Transmission Map above. Users can click on any indicator in the Transmission Map to scroll directly to its evidence card.
+
+---
+
 ## Section Explanations & FRED Series IDs
 
 ### 1. Growth / Real Economy

@@ -36,6 +36,10 @@ function renderDashboard() {
   // 2. Render Header/Weather Panel
   renderWeatherPanel(analysis);
   
+  // 2.5. Calculate and Render Transmission Map
+  const transmissionData = calculateTransmissionMap(data.series, analysis);
+  renderTransmissionMap(transmissionData, data.series);
+  
   // 3. Render Card Sections
   renderSections(data.series, currentRange, currentTheme);
 }
@@ -105,6 +109,37 @@ const SECTIONS_CONFIG = {
     icon: "🏠",
     desc: "Monitors real estate activity, which is highly sensitive to interest rate policy and serves as a major economic amplifier."
   }
+};
+
+const TICKER_NAME_MAP = {
+  'FEDFUNDS': 'Fed Funds Rate',
+  'DGS2': '2Y Treasury Yield',
+  'DGS10': '10Y Treasury Yield',
+  'T10Y2Y': 'Yield Curve Spread',
+  'BAMLH0A0HYM2': 'HY Spread',
+  'BAMLC0A0CM': 'IG Spread',
+  'STLFSI4': 'Financial Stress Index',
+  'WALCL': 'Fed Total Assets',
+  'RESBALNS': 'Bank Reserves',
+  'RRPONTSYD': 'Reverse Repo Cash',
+  'WDTGAL': 'TGA Balance',
+  'M2SL': 'M2 Money Supply',
+  'TOTBKCR': 'Total Bank Credit',
+  'MORTGAGE30US': '30Y Mortgage Rate',
+  'HOUST': 'Housing Starts',
+  'PERMIT': 'Building Permits',
+  'CSUSHPINSA': 'Home Price Index',
+  'GDPC1': 'GDP Growth',
+  'INDPRO': 'Industrial Production',
+  'RSXFS': 'Retail Sales',
+  'PCECC96': 'Real Consumption',
+  'PAYEMS': 'Nonfarm Payrolls',
+  'ICSA': 'Initial Claims',
+  'JTSJOL': 'Job Openings',
+  'CPIAUCSL': 'CPI YoY',
+  'CPILFESL': 'Core CPI YoY',
+  'PCEPI': 'PCE YoY',
+  'PCEPILFE': 'Core PCE YoY'
 };
 
 // ----------------------------------------------------
@@ -314,6 +349,454 @@ function performMacroAnalysis(series) {
   }
 
   return analysis;
+}
+
+// ----------------------------------------------------
+// MACRO TRANSMISSION SYSTEM LOGIC
+// ----------------------------------------------------
+
+function calculateTransmissionMap(series, analysis) {
+  const getLatestVal = (id) => series[id] ? series[id].latest.value : null;
+
+  // Node 1: Fed Policy
+  // Indicators: FEDFUNDS, DGS2, DGS10, T10Y2Y
+  let node1_level = 'neutral';
+  let node1_status = 'Neutral';
+  let node1_exp = '';
+  const ffr = getLatestVal('FEDFUNDS');
+  const spread10y2y = getLatestVal('T10Y2Y');
+  if (ffr !== null) {
+    if (ffr > 5.0 || (spread10y2y !== null && spread10y2y < -0.4)) {
+      node1_level = 'danger';
+      node1_status = 'highly restrictive';
+      node1_exp = `Fed policy rate is restrictive at ${ffr.toFixed(2)}%, forcing yield curve inversion at ${spread10y2y ? spread10y2y.toFixed(2) : ''}%.`;
+    } else if (ffr > 3.0) {
+      node1_level = 'worsening';
+      node1_status = 'restrictive';
+      node1_exp = `Monetary policy remains restrictive with FFR at ${ffr.toFixed(2)}% to curb inflation pressures.`;
+    } else {
+      node1_level = 'improving';
+      node1_status = 'accommodative';
+      node1_exp = `Monetary policy is supportive with FFR at ${ffr.toFixed(2)}%.`;
+    }
+  }
+
+  // Node 2: Financial Conditions
+  // Indicators: DGS2, DGS10, T10Y2Y, BAMLH0A0HYM2, BAMLC0A0CM, STLFSI4
+  let node2_level = 'neutral';
+  let node2_status = 'Neutral';
+  let node2_exp = '';
+  const hySpread = getLatestVal('BAMLH0A0HYM2');
+  const stressIndex = getLatestVal('STLFSI4');
+  if (hySpread !== null) {
+    if (hySpread > 5.0 || (stressIndex !== null && stressIndex > 1.0)) {
+      node2_level = 'danger';
+      node2_status = 'stressed';
+      node2_exp = `Credit and stress indicators are elevated, indicating high financial markets tightness.`;
+    } else if (hySpread > 4.2 || (spread10y2y !== null && spread10y2y < 0)) {
+      node2_level = 'worsening';
+      node2_status = 'tightening';
+      node2_exp = `Yield curve inversion and creeping corporate spreads indicate tightening financial conditions.`;
+    } else {
+      node2_level = 'improving';
+      node2_status = 'loose';
+      node2_exp = `Credit spreads are compressed (HY at ${hySpread.toFixed(2)}%) and stress is low, indicating loose market conditions.`;
+    }
+  }
+
+  // Node 3: Credit / Liquidity
+  // Indicators: WALCL, RESBALNS, RRPONTSYD, WDTGAL, M2SL, TOTBKCR, BAMLH0A0HYM2
+  let node3_level = 'neutral';
+  let node3_status = 'Neutral';
+  let node3_exp = '';
+  const reserves = getLatestVal('RESBALNS');
+  const bankCreditYoY = getLatestVal('TOTBKCR');
+  if (reserves !== null) {
+    if (reserves < 3.0 || (bankCreditYoY !== null && bankCreditYoY < 0)) {
+      node3_level = 'danger';
+      node3_status = 'liquidity drain';
+      node3_exp = `Bank credit is contracting and reserves ($${reserves.toFixed(2)}T) are near minimum safe ample levels.`;
+    } else if (bankCreditYoY !== null && bankCreditYoY < 2.5) {
+      node3_level = 'worsening';
+      node3_status = 'moderating';
+      node3_exp = `Fed balance sheet contraction (QT) is draining reserves, and commercial bank credit growth is slow at ${bankCreditYoY.toFixed(1)}%.`;
+    } else {
+      node3_level = 'improving';
+      node3_status = 'supportive';
+      node3_exp = `Liquidity is ample with reserves at $${reserves.toFixed(2)}T and steady bank credit expansion (${bankCreditYoY ? bankCreditYoY.toFixed(1) : ''}% YoY).`;
+    }
+  }
+
+  // Node 4: Rate-sensitive Economy
+  // Indicators: MORTGAGE30US, HOUST, PERMIT, CSUSHPINSA
+  let node4_level = 'neutral';
+  let node4_status = 'Neutral';
+  let node4_exp = '';
+  const mortgage = getLatestVal('MORTGAGE30US');
+  const housingStarts = series['HOUST'] ? series['HOUST'].changes.change12m : 0;
+  const permits = series['PERMIT'] ? series['PERMIT'].changes.change12m : 0;
+  if (mortgage !== null) {
+    if (mortgage > 7.0 || housingStarts < -150 || permits < -150) {
+      node4_level = 'danger';
+      node4_status = 'frozen';
+      node4_exp = `High mortgage rates of ${mortgage.toFixed(2)}% have severely depressed housing permits and starts YoY.`;
+    } else if (mortgage > 5.5) {
+      node4_level = 'worsening';
+      node4_status = 'chilled';
+      node4_exp = `Restrictive mortgage costs (${mortgage.toFixed(2)}%) are slowing housing sales and building momentum.`;
+    } else {
+      node4_level = 'improving';
+      node4_status = 'resilient';
+      node4_exp = `Mortgage rates at ${mortgage.toFixed(2)}% are supporting home construction and builder demand.`;
+    }
+  }
+
+  // Node 5: Real Economy
+  // Indicators: GDPC1, INDPRO, RSXFS, PCECC96
+  let node5_level = 'neutral';
+  let node5_status = 'Neutral';
+  let node5_exp = '';
+  const gdp = getLatestVal('GDPC1');
+  const indpro = getLatestVal('INDPRO');
+  if (gdp !== null) {
+    if (gdp < 0 || indpro < -1.0) {
+      node5_level = 'danger';
+      node5_status = 'contracting';
+      node5_exp = `Real economic output is shrinking, with GDP YoY at ${gdp.toFixed(1)}% and falling industrial production.`;
+    } else if (gdp < 2.0 || indpro < 0.5) {
+      node5_level = 'worsening';
+      node5_status = 'slowing';
+      node5_exp = `The real economy is expanding below trend (GDP YoY at ${gdp.toFixed(1)}%) as manufacturing softens.`;
+    } else {
+      node5_level = 'improving';
+      node5_status = 'expanding';
+      node5_exp = `Solid real economy momentum. GDP YoY is ${gdp.toFixed(1)}% and retail sales are expanding.`;
+    }
+  }
+
+  // Node 6: Labor Market
+  // Indicators: UNRATE, PAYEMS, ICSA, JTSJOL
+  let node6_level = 'neutral';
+  let node6_status = 'Neutral';
+  let node6_exp = '';
+  const unrate = getLatestVal('UNRATE');
+  const payrolls = getLatestVal('PAYEMS');
+  const claims = getLatestVal('ICSA');
+  if (unrate !== null) {
+    // Sahm diff calculation
+    const unrateHistory = series['UNRATE'] ? series['UNRATE'].history : [];
+    let low12m = 99.0;
+    if (unrateHistory.length > 0) {
+      const startIdx = Math.max(0, unrateHistory.length - 12);
+      for (let i = startIdx; i < unrateHistory.length; i++) {
+        if (unrateHistory[i].value < low12m) low12m = unrateHistory[i].value;
+      }
+    }
+    const sahmDiff = unrate - low12m;
+
+    if (sahmDiff >= 0.5 || payrolls < 0) {
+      node6_level = 'danger';
+      node6_status = 'cracking';
+      node6_exp = `Unemployment has jumped ${sahmDiff.toFixed(2)}pp above 12M low (sahm trigger), and payroll growth is negative.`;
+    } else if (sahmDiff >= 0.25 || payrolls < 120 || claims > 230000) {
+      node6_level = 'worsening';
+      node6_status = 'cooling';
+      node6_exp = `Unemployment is creeping up to ${unrate.toFixed(1)}% and monthly job gains are moderating.`;
+    } else {
+      node6_level = 'improving';
+      node6_status = 'strong';
+      node6_exp = `Labor market remains tight with unemployment at ${unrate.toFixed(1)}% and solid payroll additions.`;
+    }
+  }
+
+  // Node 7: Inflation Feedback
+  // Indicators: CPIAUCSL, CPILFESL, PCEPI, PCEPILFE
+  let node7_level = 'neutral';
+  let node7_status = 'Neutral';
+  let node7_exp = '';
+  const cpi = getLatestVal('CPIAUCSL');
+  if (cpi !== null) {
+    if (cpi > 3.8) {
+      node7_level = 'danger';
+      node7_status = 'elevated';
+      node7_exp = `CPI inflation YoY remains uncomfortably high at ${cpi.toFixed(2)}%, well above the Fed's 2.0% target.`;
+    } else if (cpi > 2.8) {
+      node7_level = 'worsening';
+      node7_status = 'sticky';
+      node7_exp = `Inflation is sticky at ${cpi.toFixed(2)}%, presenting a continuing obstacle to rate cuts.`;
+    } else {
+      node7_level = 'improving';
+      node7_status = 'moderating';
+      node7_exp = `Inflation is cooling down to ${cpi.toFixed(2)}% YoY, moving closer to target.`;
+    }
+  }
+
+  // Node 8: Fed Reaction
+  // Indicators: FEDFUNDS, DGS2, T10Y2Y, CPIAUCSL, UNRATE
+  let node8_level = 'neutral';
+  let node8_status = 'Neutral';
+  let node8_exp = '';
+  if (ffr !== null && cpi !== null) {
+    if (cpi > 2.8 && node6_level !== 'danger') {
+      node8_level = 'worsening';
+      node8_status = 'restrictive hold';
+      node8_exp = `Fed is holding rates high (${ffr.toFixed(2)}%) because inflation is sticky, keeping pressure on the economy.`;
+    } else if (node6_level === 'danger' || node6_level === 'worsening') {
+      node8_level = 'improving';
+      node8_status = 'pivot prep';
+      node8_exp = `Fed is preparing to pivot or ease policy in response to labor market cooling and cooling CPI.`;
+    } else {
+      node8_level = 'neutral';
+      node8_status = 'pause / data dependent';
+      node8_exp = `Fed maintains a data-dependent stance, waiting for clearer signs of inflation return to 2.0%.`;
+    }
+  }
+
+  // Nodes list
+  const nodes = [
+    {
+      id: "fed-policy",
+      label: "Fed Policy",
+      role: "cause / policy impulse",
+      timing: "impulse",
+      status: node1_status,
+      level: node1_level,
+      explanation: node1_exp,
+      indicators: ["FEDFUNDS", "DGS2", "DGS10", "T10Y2Y"]
+    },
+    {
+      id: "financial-conditions",
+      label: "Financial Conditions",
+      role: "leading transmission channel",
+      timing: "leading",
+      status: node2_status,
+      level: node2_level,
+      explanation: node2_exp,
+      indicators: ["DGS2", "DGS10", "T10Y2Y", "BAMLH0A0HYM2", "BAMLC0A0CM", "STLFSI4"]
+    },
+    {
+      id: "credit-liquidity",
+      label: "Credit & Liquidity",
+      role: "system fuel / stress channel",
+      timing: "leading / co-incident",
+      status: node3_status,
+      level: node3_level,
+      explanation: node3_exp,
+      indicators: ["WALCL", "RESBALNS", "RRPONTSYD", "WDTGAL", "M2SL", "TOTBKCR", "BAMLH0A0HYM2"]
+    },
+    {
+      id: "rate-sensitive",
+      label: "Rate-sensitive Economy",
+      role: "early real-economy damage channel",
+      timing: "early confirming",
+      status: node4_status,
+      level: node4_level,
+      explanation: node4_exp,
+      indicators: ["MORTGAGE30US", "HOUST", "PERMIT", "CSUSHPINSA"]
+    },
+    {
+      id: "real-economy",
+      label: "Real Economy",
+      role: "broad demand / output confirmation",
+      timing: "confirming",
+      status: node5_status,
+      level: node5_level,
+      explanation: node5_exp,
+      indicators: ["GDPC1", "INDPRO", "RSXFS", "PCECC96"]
+    },
+    {
+      id: "labor-market",
+      label: "Labor Market",
+      role: "lagging but decisive recession confirmation",
+      timing: "lagging",
+      status: node6_status,
+      level: node6_level,
+      explanation: node6_exp,
+      indicators: ["UNRATE", "PAYEMS", "ICSA", "JTSJOL"]
+    },
+    {
+      id: "inflation-feedback",
+      label: "Inflation Feedback",
+      role: "feedback loop into Fed behavior",
+      timing: "feedback",
+      status: node7_status,
+      level: node7_level,
+      explanation: node7_exp,
+      indicators: ["CPIAUCSL", "CPILFESL", "PCEPI", "PCEPILFE"]
+    },
+    {
+      id: "fed-reaction",
+      label: "Fed Reaction",
+      role: "policy response / cycle reset",
+      timing: "response",
+      status: node8_status,
+      level: node8_level,
+      explanation: node8_exp,
+      indicators: ["FEDFUNDS", "DGS2", "T10Y2Y", "CPIAUCSL", "UNRATE"]
+    }
+  ];
+
+  const fedFundsVal = ffr ? ffr.toFixed(2) : 'N/A';
+  const mortgageVal = mortgage ? mortgage.toFixed(1) : 'N/A';
+  const unrateVal = unrate ? unrate.toFixed(1) : 'N/A';
+  const highYieldVal = hySpread ? hySpread.toFixed(2) : 'N/A';
+
+  // Construct dynamic causal story based on current regime/weather
+  let story = "";
+  if (analysis.weather === 'Recession Risk') {
+    story = `The US economy is in Recession Risk mode because policy is deeply restrictive, rate-sensitive channels have frozen, industrial activity is contracting, and the labor market is starting to crack (unemployment has risen to ${unrateVal}%).`;
+  } else if (analysis.weather === 'Credit Stress') {
+    story = `The US economy is in Credit Stress mode because while consumer spending has held up, bank reserves are draining and credit spreads (HY Spread at ${highYieldVal}%) have broken higher, threatening credit availability.`;
+  } else if (analysis.weather === 'Inflation Problem') {
+    story = `The US economy is in Inflation Problem mode because policy is restrictive but inflation remains stubbornly high (CPI at ${cpi ? cpi.toFixed(1) : 'N/A'}%), locking the Fed into a hawkish hold.`;
+  } else if (analysis.weather === 'Slowdown') {
+    story = `The US economy is in Slowdown mode because policy remains restrictive (FFR at ${fedFundsVal}%), housing is rate-sensitive (${mortgageVal}% mortgage), labor demand is cooling, but credit stress has not yet broken.`;
+  } else {
+    story = `The US economy is in Goldilocks mode because monetary policy remains balanced, credit stress is absent, employment remains strong, and inflation continues its clean cooling path toward target.`;
+  }
+
+  // Calculate bottleneck: weakest transmission nodes
+  let bottleneckNodes = nodes.filter(n => n.level === 'danger');
+  if (bottleneckNodes.length < 2) {
+    bottleneckNodes = bottleneckNodes.concat(nodes.filter(n => n.level === 'worsening'));
+  }
+  const bottleneck = [...new Set(bottleneckNodes.map(n => n.label))].slice(0, 3);
+  if (bottleneck.length === 0) {
+    bottleneck.push("None detected (System flowing smoothly)");
+  }
+
+  // Calculate watch next indicators
+  const watchNext = [];
+  if (node6_level === 'danger' || node6_level === 'worsening') {
+    watchNext.push("UNRATE", "ICSA");
+  } else {
+    watchNext.push("ICSA");
+  }
+
+  watchNext.push("BAMLH0A0HYM2", "PCEPILFE", "RESBALNS");
+
+  if (node4_level === 'danger' || node4_level === 'worsening') {
+    watchNext.push("MORTGAGE30US");
+  } else {
+    watchNext.push("T10Y2Y");
+  }
+
+  const uniqueWatchNext = [...new Set(watchNext)].slice(0, 5);
+
+  return {
+    story,
+    bottleneck,
+    watchNext: uniqueWatchNext,
+    nodes
+  };
+}
+
+function renderTransmissionMap(mapData, series) {
+  const container = document.getElementById('transmission-map-container');
+  if (!container) return;
+
+  const nodesHTML = mapData.nodes.map((node, index) => {
+    const indicatorsHTML = node.indicators.map(id => {
+      if (!series[id]) return '';
+      const cardStatus = calculateCardStatus(id, series[id]);
+      const formatted = formatValue(series[id].latest.value, series[id].unit, id);
+      return `
+        <span class="node-indicator-chip ${cardStatus.level}" title="${series[id].name}" data-target-card="${id}">
+          ${id}: ${formatted.value}${formatted.unit}
+        </span>
+      `;
+    }).join('');
+
+    const arrowHTML = index < mapData.nodes.length - 1 ? `
+      <div class="transmission-arrow" aria-hidden="true">➔</div>
+    ` : '';
+
+    return `
+      <div class="transmission-node ${node.level}">
+        <div class="node-header">
+          <div class="node-title-area">
+            <span class="node-timing-badge">${node.timing}</span>
+            <h3 class="node-name">${node.label}</h3>
+          </div>
+          <span class="status-pill ${node.level}">${node.status}</span>
+        </div>
+        <p class="node-role">${node.role}</p>
+        <p class="node-explanation">${node.explanation}</p>
+        <div class="node-indicators">
+          ${indicatorsHTML}
+        </div>
+      </div>
+      ${arrowHTML}
+    `;
+  }).join('');
+
+  const bottleneckHTML = mapData.bottleneck.map((label, idx) => {
+    const isWorsening = mapData.nodes.find(n => n.label === label)?.level === 'worsening';
+    const chipClass = isWorsening ? 'worsening' : '';
+    const arrow = idx < mapData.bottleneck.length - 1 ? `<span class="bottleneck-arrow">→</span>` : '';
+    return `<span class="bottleneck-node-chip ${chipClass}">${label}</span>${arrow}`;
+  }).join(' ');
+
+  const watchNextHTML = mapData.watchNext.map(id => {
+    const name = TICKER_NAME_MAP[id] || id;
+    return `
+      <button class="watch-next-chip" data-target-card="${id}">
+        🔍 ${name} (${id})
+      </button>
+    `;
+  }).join('');
+
+  container.innerHTML = `
+    <div class="transmission-title-section">
+      <h2 class="transmission-title">⛓️ US Macro Transmission Map</h2>
+      <p class="section-desc">Trace the flow of monetary policy decisions through financial markets, banking liquidity, and rate-sensitive sectors into the real economy and labor market.</p>
+    </div>
+
+    <!-- Main Causal Story -->
+    <div class="causal-story-box">
+      <strong>Core Regime Transmission:</strong> ${mapData.story}
+    </div>
+
+    <!-- Transmission Flow Nodes -->
+    <div class="transmission-flow">
+      ${nodesHTML}
+    </div>
+
+    <!-- Summary Footer (Bottleneck & Watch Next) -->
+    <div class="transmission-summary-footer">
+      <div class="bottleneck-box">
+        <h4 class="box-title">🛑 Current Bottleneck Chain</h4>
+        <div class="bottleneck-path">
+          ${bottleneckHTML}
+        </div>
+      </div>
+      <div class="watch-next-box">
+        <h4 class="box-title">👁️ Critical Indicators to Watch Next</h4>
+        <div class="watch-next-list">
+          ${watchNextHTML}
+        </div>
+      </div>
+    </div>
+  `;
+
+  // Smooth scroll and flash effect
+  container.querySelectorAll('[data-target-card]').forEach(el => {
+    el.addEventListener('click', (e) => {
+      const cardId = el.getAttribute('data-target-card');
+      const targetCard = document.getElementById(`card-${cardId}`);
+      if (targetCard) {
+        targetCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        targetCard.style.outline = '3px solid var(--primary)';
+        targetCard.style.outlineOffset = '2px';
+        setTimeout(() => {
+          targetCard.style.outline = 'none';
+        }, 2000);
+      }
+    });
+    if (el.tagName === 'SPAN') {
+      el.style.cursor = 'pointer';
+    }
+  });
 }
 
 // ----------------------------------------------------
