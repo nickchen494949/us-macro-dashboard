@@ -1,0 +1,21 @@
+{
+  "name": "us-macro-dashboard",
+  "version": "1.0.0",
+  "description": "Premium US Macro Economic Dashboard",
+  "main": "index.html",
+  "scripts": {
+    "fetch": "node scripts/fetch-data.js",
+    "mock": "node scripts/generate-mock-cache.js",
+    "dev": "npx -y http-server -p 8080"
+  },
+  "keywords": [
+    "macroeconomics",
+    "dashboard",
+    "fred",
+    "finance",
+    "recession",
+    "sparklines"
+  ],
+  "author": "EXECUTOR",
+  "license": "MIT"
+}

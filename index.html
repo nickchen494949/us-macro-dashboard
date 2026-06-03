@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>US Macro Weather Dashboard</title>
+  
+  <!-- SEO Tags -->
+  <meta name="description" content="A premium real-time dashboard to monitor the US macroeconomy: growth, labor, inflation, interest rates, bank liquidity, credit default spreads, and housing.">
+  <meta name="author" content="Antigravity">
+  
+  <!-- Styling and Fonts -->
+  <link rel="stylesheet" href="src/style.css">
+  
+  <!-- Preconnect to Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body>
+
+  <!-- Mesh Gradient Backgrounds -->
+  <div class="bg-gradient-mesh"></div>
+
+  <!-- Header Bar -->
+  <header>
+    <div class="brand-section">
+      <h1>📊 US Macro Weather</h1>
+      <p>Systemic economic weather dashboard & recession risk tracker</p>
+    </div>
+    
+    <div class="header-controls">
+      <!-- Range selectors -->
+      <div class="range-selector">
+        <button class="range-btn" data-range="1Y">1Y</button>
+        <button class="range-btn active" data-range="5Y">5Y</button>
+        <button class="range-btn" data-range="MAX">MAX</button>
+      </div>
+
+      <!-- Light/Dark Mode Switch -->
+      <button class="theme-toggle-btn" id="theme-toggle">🌙</button>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="container">
+    
+    <!-- Top Summary Weather Panel -->
+    <section class="summary-panel" aria-label="US Macro Summary Weather Panel">
+      <div class="summary-header">
+        <h2 class="summary-title">🌀 Systemic Weather Pillars</h2>
+        <!-- Master weather badge updated by main.js -->
+        <span id="weather-master-container" class="weather-master-badge goldilocks">
+          🌤️ US Macro Weather: Checking...
+        </span>
+      </div>
+      
+      <!-- 5 columns weather grid -->
+      <div class="weather-pillars" id="weather-pillars-grid">
+        <!-- Rendered dynamically by main.js -->
+        <div class="pillar-card">
+          <span class="pillar-label">Growth</span>
+          <div class="pillar-value">...</div>
+          <p class="pillar-explanation">Checking GDP momentum...</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sections container for Growth, Labor, Inflation, Rates, Liquidity, Credit, Housing -->
+    <div id="sections-container">
+      <!-- Section wrappers and cards grid rendered dynamically by main.js -->
+      <div style="text-align: center; padding: 3rem;">
+        <div class="spinner" style="margin: 0 auto 1rem auto;"></div>
+        <p class="loading-text">Loading macroeconomic indicators and sparklines...</p>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Footer Info -->
+  <footer>
+    <p>US Macro Weather Dashboard © 2026. All rights reserved.</p>
+    <p>Source Data: <a href="https://fred.stlouisfed.org" target="_blank" rel="noopener">Federal Reserve Bank of St. Louis (FRED)</a>. Compiled locally as static ES modules.</p>
+    <p>Created by the EXECUTOR. Safe fallback cache system engaged.</p>
+  </footer>
+
+  <!-- Entry JavaScript Module -->
+  <script type="module" src="src/main.js"></script>
+</body>
+</html>
