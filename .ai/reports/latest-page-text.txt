@@ -1,0 +1,609 @@
+📊 US Macro Weather
+
+Systemic economic weather dashboard & recession risk tracker
+
+1Y
+5Y
+MAX
+🌙
+🌀 Systemic Weather Pillars
+🌤️ US MACRO WEATHER: INFLATION PROBLEM
+GROWTH
+Slowing
+
+Economy is expanding but slowing down. GDP YoY is 2.6% and industrial growth is losing steam.
+
+LABOR
+Cooling
+
+Labor demand is moderating. Unemployment at 4.3% is creeping up; monthly jobs average is 48k.
+
+INFLATION
+Reaccelerating
+
+Inflation pressure is rising. CPI YoY has crept up to 3.95% (+1.12% over 3M).
+
+FED/RATES
+Restrictive
+
+Yield curve inverted at -0.16% under restrictive FFR of 3.63%. High recession risk.
+
+CREDIT/LIQUIDITY
+Tightening
+
+Liquidity is draining and credit terms are tightening. Corporate HY spreads are moderate at 4.21%.
+
+⛓️ US Macro Transmission Map
+
+Trace the flow of monetary policy decisions through financial markets, banking liquidity, and rate-sensitive sectors into the real economy and labor market.
+
+Core Regime Transmission: The US economy is in Inflation Problem mode because policy is restrictive but inflation remains stubbornly high (CPI at 4.0%), locking the Fed into a hawkish hold.
+IMPULSE
+Fed Policy
+Restrictive
+
+cause / policy impulse
+
+Monetary policy remains restrictive with FFR at 3.63% to curb inflation pressures.
+
+FEDFUNDS: 3.63%
+DGS2: 4.19%
+DGS10: 4.03%
+T10Y2Y: -0.16%
+➔
+LEADING
+Financial Conditions
+Tightening
+
+leading transmission channel
+
+Yield curve inversion and creeping corporate spreads indicate tightening financial conditions.
+
+DGS2: 4.19%
+DGS10: 4.03%
+T10Y2Y: -0.16%
+BAMLH0A0HYM2: 4.21%
+BAMLC0A0CM: 1.33%
+STLFSI4: -0.76 pts
+➔
+LEADING / CO-INCIDENT
+Credit & Liquidity
+Liquidity Drain
+
+system fuel / stress channel
+
+Bank credit is contracting and reserves ($0.00T) are near minimum safe ample levels.
+
+WALCL: 6.837$T
+RESBALNS: 0.003$T
+RRPONTSYD: 0.427$T
+WDTGAL: 413.4$B
+M2SL: -1.00%
+TOTBKCR: +3.96%
+BAMLH0A0HYM2: 4.21%
+➔
+EARLY CONFIRMING
+Rate-sensitive Economy
+Chilled
+
+early real-economy damage channel
+
+Restrictive mortgage costs (6.83%) are slowing housing sales and building momentum.
+
+MORTGAGE30US: 6.83%
+HOUST: 1317k
+PERMIT: 1406k
+CSUSHPINSA: +5.22%
+➔
+CONFIRMING
+Real Economy
+Expanding
+
+broad demand / output confirmation
+
+Solid real economy momentum. GDP YoY is 2.6% and retail sales are expanding.
+
+GDPC1: +2.57%
+INDPRO: +1.35%
+RSXFS: +5.21%
+PCECC96: +7.92%
+➔
+LAGGING
+Labor Market
+Cooling
+
+lagging but decisive recession confirmation
+
+Unemployment is creeping up to 4.3% and monthly job gains are moderating.
+
+UNRATE: 4.30%
+PAYEMS: 48k
+ICSA: 209.0k
+JTSJOL: 7.62M
+➔
+FEEDBACK
+Inflation Feedback
+Elevated
+
+feedback loop into Fed behavior
+
+CPI inflation YoY remains uncomfortably high at 3.95%, well above the Fed's 2.0% target.
+
+CPIAUCSL: +3.95%
+CPILFESL: +2.99%
+PCEPI: +3.77%
+PCEPILFE: +3.29%
+➔
+RESPONSE
+Fed Reaction
+Restrictive Hold
+
+policy response / cycle reset
+
+Fed is holding rates high (3.63%) because inflation is sticky, keeping pressure on the economy.
+
+FEDFUNDS: 3.63%
+DGS2: 4.19%
+T10Y2Y: -0.16%
+CPIAUCSL: +3.95%
+UNRATE: 4.30%
+🛑 Current Bottleneck Chain
+Credit & Liquidity
+→
+Inflation Feedback
+👁️ Critical Indicators to Watch Next
+🔍 UNRATE (UNRATE)
+🔍 Initial Claims (ICSA)
+🔍 HY Spread (BAMLH0A0HYM2)
+🔍 Core PCE YoY (PCEPILFE)
+🔍 Bank Reserves (RESBALNS)
+📊 Supporting Indicator Evidence
+
+Detailed historical trends, sparklines, and momentum indicators that form the factual foundation of the transmission map.
+
+📈
+Growth & Real Economy
+
+Measures the expansion rate of the real economy. Sustained positive growth shows expansion; rolling over indicates slowdown or recession risk.
+
+GDPC1
+Real GDP YoY
+Expanding
++2.57 %
+as of Q1 2026
+1M
+—
+3M
++0.58pp
+12M
++0.55pp
+
+Real GDP YoY is expanding solid at 2.6%, indicating healthy output expansion.
+
+INDPRO
+Industrial Production YoY
+Expanding
++1.35 %
+as of Apr 2026
+1M
++0.59pp
+3M
+-0.06pp
+12M
++0.47pp
+
+Industrial production is expanding YoY at 1.4%, driven by manufacturing strength.
+
+RSXFS
+Retail Sales YoY
+Strong
++5.21 %
+as of Apr 2026
+1M
++0.79pp
+3M
++1.99pp
+12M
++0.52pp
+
+Consumer retail spending remains robust, expanding YoY at 5.2%.
+
+PCECC96
+Real Personal Consumption YoY
+Strong
++7.92 %
+as of Q1 2026
+1M
+—
+3M
+-0.82pp
+12M
+-0.32pp
+
+Real personal consumption YoY is expanding robustly at 7.9%, anchoring GDP.
+
+💼
+Labor Market
+
+Evaluates employment health. Tight labor markets support wage growth and consumer demand; rising unemployment signals economic distress.
+
+UNRATE
+Unemployment Rate
+Low
+4.30 %
+as of Apr 2026
+1M
+0pp
+3M
+0pp
+12M
++0.1pp
+
+Unemployment remains historically low and stable at 4.3%. Labor channels remain healthy.
+
+PAYEMS
+Nonfarm Payrolls (3M Avg Net Change)
+Cooling
+48 k
+as of Apr 2026
+1M
+-15k
+3M
+-13.3k
+12M
+-24.3k
+
+Job additions average is cooling down at 48k, trailing labor supply expansion.
+
+ICSA
+Initial Jobless Claims (4W Avg)
+Spiking
+209.0 k
+as of May 23, 2026
+1M
++1.3k
+3M
+-6.8k
+12M
+-28.8k
+
+Initial jobless claims 4W average is high at 209000k, indicating expanding corporate layoffs.
+
+JTSJOL
+Job Openings
+Strong
+7.62 M
+as of Apr 2026
+1M
++0.73M
+3M
++0.38M
+12M
++0.52M
+
+Openings remain plentiful at 7.62M, maintaining a labor-favorable supply spread.
+
+🏷️
+Inflation Pressures
+
+Monitors price pressures relative to the Fed's 2.0% target. Deflation indicates depression; high inflation triggers restrictive monetary policy.
+
+CPIAUCSL
+CPI Inflation YoY
+Sticky
++3.95 %
+as of Apr 2026
+1M
++0.63pp
+3M
++1.12pp
+12M
++1.62pp
+
+Latest inflation rate is 3.95%. YoY trend is sticky and resisting target return.
+
+CPILFESL
+Core CPI Inflation YoY
+Sticky
++2.99 %
+as of Apr 2026
+1M
++0.32pp
+3M
++0.04pp
+12M
++0.21pp
+
+Core inflation YoY is sticky at 2.99%, highlighting persistent services costs.
+
+PCEPI
+PCE Inflation YoY
+Sticky
++3.77 %
+as of Apr 2026
+1M
++0.24pp
+3M
++0.91pp
+12M
++1.49pp
+
+Latest inflation rate is 3.77%. YoY trend is sticky and resisting target return.
+
+PCEPILFE
+Core PCE Inflation YoY
+Sticky
++3.29 %
+as of Apr 2026
+1M
++0.05pp
+3M
++0.2pp
+12M
++0.68pp
+
+Core inflation YoY is sticky at 3.29%, highlighting persistent services costs.
+
+🏦
+Fed, Rates & Yield Curve
+
+Shows borrowing costs and Treasury spread dynamics. Inverted yield curves are highly reliable leading indicators of economic recession.
+
+FEDFUNDS
+Effective Fed Funds Rate
+Restrictive
+3.63 %
+as of May 2026
+1M
+-0.01pp
+3M
+-0.01pp
+12M
+-0.7pp
+
+Monetary policy rates are moderately restrictive at 3.63% to anchor inflation.
+
+DGS2
+2Y Treasury Yield
+Moderate
+4.19 %
+as of May 30, 2026
+1M
+-0.05pp
+3M
+-0.17pp
+12M
+-0.39pp
+
+Treasury yields are stable around 4.19%, reflecting standard capital markets pricing.
+
+DGS10
+10Y Treasury Yield
+Moderate
+4.03 %
+as of May 30, 2026
+1M
+-0.03pp
+3M
+-0.11pp
+12M
+-0.24pp
+
+Treasury yields are stable around 4.03%, reflecting standard capital markets pricing.
+
+T10Y2Y
+10Y-2Y Treasury Spread
+Inverted
+-0.16 %
+as of May 30, 2026
+1M
++0.02pp
+3M
++0.06pp
+12M
++0.14pp
+
+The yield curve is inverted at -0.16%, signaling that markets expect future growth cooling.
+
+💧
+Liquidity, Banking & Money
+
+Tracks capital reserves and liquidity injections or drains. Declining liquidity indicates tightening financial conditions.
+
+WALCL
+Fed Balance Sheet (Total Assets)
+Stable/QE
+6.837 $T
+as of May 28, 2026
+1M
+-0.03$T
+3M
+-0.13$T
+12M
+-0.55$T
+
+Fed Balance Sheet total assets at $6.84T indicate liquid backing is stable.
+
+RESBALNS
+Bank Reserves
+Ample Limit
+0.003 $T
+as of Aug 2020
+1M
+0$T
+3M
+0$T
+12M
+0$T
+
+Bank reserves at $0.00T are close to the lowest safe ample reserves threshold.
+
+RRPONTSYD
+Overnight Reverse Repo
+High Cash
+0.427 $T
+as of May 30, 2026
+1M
++0.01$T
+3M
+-0.1$T
+12M
+-0.48$T
+
+Significant cash ($0.43T) sits in Reverse Repo, representing a latent banking buffer.
+
+WDTGAL
+Treasury General Account
+Comfortable
+413.4 $B
+as of May 28, 2026
+1M
+-579.2$B
+3M
+-32.86$B
+12M
++26.31$B
+
+Treasury cash buffer is stable at $413B, representing healthy government liquidity.
+
+M2SL
+M2 Money Supply YoY
+Stagnant
+-1.00 %
+as of May 2026
+1M
+-0.05pp
+3M
++0.04pp
+12M
++0.03pp
+
+M2 growth is stagnant at -1.0% YoY, mirroring overall credit demand slowdown.
+
+TOTBKCR
+Commercial Bank Credit YoY
+Expanding
++3.96 %
+as of May 28, 2026
+1M
+-0.04pp
+3M
++0.12pp
+12M
++0.37pp
+
+Bank credit growth YoY is solid at 4.0%, backing capital business investment.
+
+⚠️
+Credit Stress
+
+Assesses systemic credit default and financing risk. Spiking credit spreads signal banking or financial system fractures.
+
+BAMLH0A0HYM2
+High Yield OAS
+Creeping
+4.21 %
+as of May 30, 2026
+1M
++0.46pp
+3M
++0.29pp
+12M
++0.03pp
+
+High-yield credit spreads are creeping up to 4.21%, indicating marginal financing tightening.
+
+BAMLC0A0CM
+Investment Grade OAS
+Calm
+1.33 %
+as of May 30, 2026
+1M
++0.21pp
+3M
++0.08pp
+12M
++0.05pp
+
+IG credit spreads are tight at 1.33%, suggesting institutional lending channels are open.
+
+STLFSI4
+Financial Stress Index
+Calm
+-0.76 pts
+as of May 28, 2026
+1M
+-0.16pts
+3M
+-0.23pts
+12M
++0.14pts
+
+Stress index is below historical average at -0.76 pts, signaling quiet banking conditions.
+
+🏠
+Housing & Rate-Sensitive Sector
+
+Monitors real estate activity, which is highly sensitive to interest rate policy and serves as a major economic amplifier.
+
+HOUST
+Housing Starts
+Expanding
+1317 k
+as of May 2026
+1M
+-70.3k
+3M
+-132.75k
+12M
++16.42k
+
+Starts average 1317k, indicating homebuilder sentiment remains resilient.
+
+PERMIT
+Building Permits
+Active
+1406 k
+as of May 2026
+1M
+-94k
+3M
+-177k
+12M
++22k
+
+Permits are stable at 1406k, signaling developers expect future demand.
+
+MORTGAGE30US
+30Y Fixed Mortgage Rate
+Restrictive
+6.83 %
+as of May 28, 2026
+1M
+-0.08pp
+3M
+-0.21pp
+12M
+-0.21pp
+
+Mortgage rate is restrictive at 6.83%, slowing transaction turnover volume.
+
+CSUSHPINSA
+Case-Shiller Home Price Index YoY
+Appreciating
++5.22 %
+as of May 2026
+1M
+-0.2pp
+3M
+-0.47pp
+12M
++0.54pp
+
+Home prices are appreciating healthily at 5.2% YoY, mirroring standard asset growth.
+
+US Macro Weather Dashboard © 2026. All rights reserved.
+
+Source Data: Federal Reserve Bank of St. Louis (FRED). Compiled locally as static ES modules.
+
+Created by the EXECUTOR. Safe fallback cache system engaged.

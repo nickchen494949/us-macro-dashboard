@@ -17,5 +17,8 @@
     "sparklines"
   ],
   "author": "EXECUTOR",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "playwright": "^1.60.0"
+  }
 }

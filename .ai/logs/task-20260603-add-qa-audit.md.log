@@ -1,0 +1,14 @@
+I will read the task file `.ai/inbox/task-20260603-add-qa-audit.md` to understand the work that needs to be done.
+I will list the directory contents of the project to check if a `package.json` exists and what files are currently in the repository.
+I will view the `package.json` file to check its contents and existing dependencies.
+I will list the `scripts` directory contents to see the existing scripts.
+I will run a command to install the `playwright` npm package and then install Chromium for Playwright.
+I will install the Chromium browser driver for Playwright.
+I will view `index.html` to understand how the dashboard is built and what selector to use for the indicator cards, title, loading state, etc.
+I will view `src/main.js` to see how the dashboard indicators are rendered dynamically so I can write a correct script to check and count them.
+I will view lines 800 to 1200 of `src/main.js` to understand the indicator cards structure.
+I will write the Playwright audit script `scripts/audit-live.js`. I'll make sure it includes the directory creation, event listeners for console/page errors, checks for the loading text, checks for the title "US Macro Weather", extracts the card count and weather state, and saves the page text, screenshot, and JSON report.
+I will check `package.json` to verify that `playwright` has been added as a dependency.
+I will create the reports directory and run the audit script to check the live dashboard.
+I will view the generated `latest-audit.json` report to verify its structure and content.
+I will view the first 100 lines of `latest-page-text.txt` to verify the page text extraction.
